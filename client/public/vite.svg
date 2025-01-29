@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--logos" width="31.88" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 257">
+  <defs>
+    <linearGradient id="IconifyId1813088fe1fbc01fb466" x1="-.828%" x2="57.636%" y1="7.652%" y2="78.411%">
+      <stop offset="0%" stop-color="#41D1FF"></stop>
+      <stop offset="100%" stop-color="#BD34FE"></stop>
+    </linearGradient>
+  </defs>
+  <rect x="10" y="25" width="236" height="200" rx="20" fill="url(#IconifyId1813088fe1fbc01fb466)" />
+  <path d="M45 75h160v10H45zM45 120h160v10H45zM45 165h160v10H45z" fill="white"/>
+  <path d="M45 75l20 20l30 -30l60 60l40 -40l30 30" stroke="white" stroke-width="8" fill="none" />
+</svg>
