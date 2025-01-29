@@ -8,14 +8,8 @@ const Input: React.FC = () => {
   const [message, setMessage] = useState<string>("");
 
   const handleSendData = async (): Promise<void> => {
-    if (!todo.trim()) {
-      setMessage("Todo cannot be empty!");
-      return;
-    }
-
     setIsLoading(true);
     setMessage("");
-
     try {
       await postRequest("add-todo", { todo });
       setTodo("");
@@ -35,7 +29,7 @@ const Input: React.FC = () => {
           type="text"
           value={todo}
           className="bg-slate-300 border-2 border-yellow-400 py-2 px-4 mr-4 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
-          placeholder="Enter something..."
+          placeholder="Enter Today Todo..."
           onChange={(e) => setTodo(e.target.value)}
           disabled={isLoading} 
         />

@@ -3,6 +3,7 @@ import { getRequest, postRequest } from "../servises";
 import { TODOS } from "../servises";
 import Completed from "./Completed";
 import { showError, showInfo, showSuccess } from "../../Utility/Toastyfy";
+import Swal from "sweetalert2";
 
 const Pendings: React.FC = () => {
   const [todos, setTodos] = useState<TODOS[]>([]);
@@ -19,7 +20,7 @@ const Pendings: React.FC = () => {
       }
     };
     fetchTodos();
-  }, [todos]);
+  }, );
 
   async function handleDelete(id: string): Promise<void> {
     try {
@@ -30,27 +31,27 @@ const Pendings: React.FC = () => {
     }
   }
 
-  function editHandler(id: string, todo: string): void {
-    setEditId(id); 
-    setEditText(todo); 
-  }
+  async function editHandler(id: string, todo: string): Promise<void> {
+    const { value: newText } = await Swal.fire({
+      title: "Edit Task 😒",
+      input: "text",
+      inputValue: todo,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      cancelButtonText: "Cancel",
+    });
 
-  async function saveEdit(id: string): Promise<void> {
-    try {
-      const response = await postRequest("edit", { id, todo: editText });
-      if (response.ok) {
-        showSuccess("Task updated successfully");
-        setTodos((prevTodos) =>
-          prevTodos.map((todo) =>
-            todo._id === id ? { ...todo, todo: editText } : todo
-          )
-        );
-        setEditId(null);
-      } else {
-        showError(response.msg);
+    if (newText) {
+      try {
+        const response = await postRequest("edit", { id, todo: newText });
+        if (response.ok) {
+          Swal.fire("Updated!", "Task updated successfully.", "success");
+        } else {
+          Swal.fire("Error!", response.msg, "error");
+        }
+      } catch (error) {
+        Swal.fire("Error!", "Update failed", "error");
       }
-    } catch (error) {
-      showError("Update failed");
     }
   }
 
@@ -76,34 +77,20 @@ const Pendings: React.FC = () => {
             key={todo._id}
             className="flex flex-col sm:flex-row items-center justify-between p-4 border-b bg-white shadow-md rounded-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105"
           >
-            {editId === todo._id ? (
-              <input
-                type="text"
-                value={editText}
-                onChange={(e) => setEditText(e.target.value)}
-                className="border p-2 rounded-md text-lg font-semibold"
-              />
-            ) : (
+            
               <span className="text-lg font-semibold text-gray-800">
                 {todo.todo}
               </span>
-            )}
+            
             <div className="flex space-x-2 mt-2 sm:mt-0">
-              {editId === todo._id ? (
-                <button
-                  className="p-2 text-xs text-white bg-blue-500 border border-blue-500 rounded-lg hover:bg-blue-600 transition"
-                  onClick={() => saveEdit(todo._id)}
-                >
-                  Save
-                </button>
-              ) : (
+              
                 <button
                   className="px-4 py-2 text-xs text-gray-700 border border-gray-400 rounded-lg hover:bg-gray-100 transition"
                   onClick={() => editHandler(todo._id, todo.todo)}
                 >
                   Edit
                 </button>
-              )}
+              
               <button
                 className="px-4 py-2 text-xs text-white bg-green-500 border border-green-500 rounded-lg hover:bg-green-600 transition"
                 onClick={() => handleCompleted(todo._id)}
