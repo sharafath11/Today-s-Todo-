@@ -7,9 +7,6 @@ import Swal from "sweetalert2";
 
 const Pendings: React.FC = () => {
   const [todos, setTodos] = useState<TODOS[]>([]);
-  const [editId, setEditId] = useState<string | null>(null);
-  const [editText, setEditText] = useState<string>("");
-
   useEffect(() => {
     const fetchTodos = async (): Promise<void> => {
       try {
@@ -20,7 +17,7 @@ const Pendings: React.FC = () => {
       }
     };
     fetchTodos();
-  }, );
+  },[todos]);
 
   async function handleDelete(id: string): Promise<void> {
     try {
