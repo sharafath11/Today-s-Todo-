@@ -20,9 +20,20 @@ const Pendings: React.FC = () => {
   },[todos]);
 
   async function handleDelete(id: string): Promise<void> {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to delete this  todo?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, proceed',
+      cancelButtonText: 'Cancel',
+      reverseButtons: true,
+    });
     try {
+      if(!result.isConfirmed) return 
+      console.log("fdbvjfrbvjhrbvhiorbvjhfrbjhiwbwijh")
       const response = await postRequest("delete", { id });
-      response.ok ? showInfo("You are fake 🤬") : showError(response.msg);
+      response.ok ? showInfo("You are fake 🫠") : showError(response.msg);
     } catch (error) {
       showError("Something went wrong");
     }

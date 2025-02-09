@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Pendings from './Pendings';
 import { postRequest } from '../servises';
 
 const Input: React.FC = () => {
@@ -11,7 +10,8 @@ const Input: React.FC = () => {
     setIsLoading(true);
     setMessage("");
     try {
-      await postRequest("add-todo", { todo });
+      const data=await postRequest("add-todo", { todo });
+      if(!data.ok)return setMessage(data.msg)
       setTodo("");
       setMessage("Todo added successfully!");
     } catch (error) {

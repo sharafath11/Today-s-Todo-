@@ -2,7 +2,7 @@ import React from 'react';
 import { TODOS } from '../servises';
 interface PropInterFace{
   todos:TODOS,
-  handleDelete:void
+  handleDelete():void
 }
 
 const Completed:React.FC<PropInterFace> = ({todos,handleDelete}) => {

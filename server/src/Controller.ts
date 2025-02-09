@@ -11,11 +11,16 @@ export const getTodos = async (req: Request, res: Response) => {
     }
 };
 
-export const addTodo = async (req: Request, res: Response) => {
+export const addTodo = async (req: Request, res: Response) =>{
     try {
         const { todo } = req.body;
         console.log(req.body)
-        const newTodo = new todoModal({ todo });
+        const isExist=await  todoModal.findOne({ todo });
+        if(isExist) { 
+          res.json({ok:false,msg:"Todo already exist"})
+          return
+        }
+        const newTodo =await  new todoModal({ todo });
         const savedTodo = await newTodo.save();
         res.json({ ok: true, todo: savedTodo, msg: "Todo added successfully" });
     } catch (error) {
